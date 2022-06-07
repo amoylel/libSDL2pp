@@ -58,3 +58,29 @@ doxygen/
 
 # OS Specific files
 .DS_Store
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.opensdf
+*.sdf
+
+
+bld/
+debug/
+release/
+Debug/
+Release/
+cef/
+native/
+player/
+ipch/
+*.opendb
+*.db
+out/
+.vs/
+build/
+out/
+CMakeSettings.json

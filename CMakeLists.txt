@@ -23,7 +23,7 @@ else()
 endif()
 
 # depends
-find_package(SDL2 REQUIRED)
+add_subdirectory(third_party/SDL)
 set(SDL2_ALL_LIBRARIES SDL2::SDL2)
 set(SDL2_ALL_PKGCONFIG_MODULES sdl2)
 
@@ -38,24 +38,24 @@ if(MINGW)
 endif()
 
 if(SDL2PP_WITH_IMAGE)
-	find_package(SDL2_image REQUIRED)
-	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2::SDL2_image)
+	add_subdirectory(third_party/SDL_image)
+	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2_image)
 	set(SDL2_ALL_PKGCONFIG_MODULES "${SDL2_ALL_PKGCONFIG_MODULES} SDL2_image")
 else()
 	message(STATUS "SDL2_image support disabled")
 endif()
 
 if(SDL2PP_WITH_TTF)
-	find_package(SDL2_ttf REQUIRED)
-	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2::SDL2_ttf)
+	add_subdirectory(third_party/SDL_ttf)
+	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2_ttf)
 	set(SDL2_ALL_PKGCONFIG_MODULES "${SDL2_ALL_PKGCONFIG_MODULES} SDL2_ttf")
 else()
 	message(STATUS "SDL2_ttf support disabled")
 endif()
 
 if(SDL2PP_WITH_MIXER)
-	find_package(SDL2_mixer REQUIRED)
-	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2::SDL2_mixer)
+	add_subdirectory(third_party/SDL_mixer)
+	set(SDL2_ALL_LIBRARIES ${SDL2_ALL_LIBRARIES} SDL2_mixer)
 	set(SDL2_ALL_PKGCONFIG_MODULES "${SDL2_ALL_PKGCONFIG_MODULES} SDL2_mixer")
 else()
 	message(STATUS "SDL2_mixer support disabled")
@@ -216,39 +216,39 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 	# install
 	include(GNUInstallDirs)
 
-	install(TARGETS SDL2pp
-		EXPORT SDL2pp-targets
-		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	)
-	install(
-		FILES
-			${LIBRARY_HEADERS}
-			${PROJECT_BINARY_DIR}/SDL2pp/Config.hh
-			${PROJECT_BINARY_DIR}/SDL2pp/Export.hh
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2pp
-	)
-
-	configure_file(sdl2pp.pc.in sdl2pp.pc @ONLY)
-	install(
-		FILES
-			${PROJECT_BINARY_DIR}/sdl2pp.pc
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
-	)
-
-	configure_file(cmake/SDL2ppConfig.cmake.in cmake/SDL2ppConfig.cmake @ONLY)
-	install(EXPORT SDL2pp-targets
-		FILE SDL2ppTargets.cmake
-		NAMESPACE SDL2pp::
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/SDL2pp
-	)
-	install(
-		FILES
-			${PROJECT_BINARY_DIR}/cmake/SDL2ppConfig.cmake
-			cmake/FindSDL2_image.cmake
-			cmake/FindSDL2_ttf.cmake
-			cmake/FindSDL2_mixer.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/SDL2pp
-	)
+#	install(TARGETS SDL2pp
+#		EXPORT SDL2pp-targets
+#		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#	)
+#	install(
+#		FILES
+#			${LIBRARY_HEADERS}
+#			${PROJECT_BINARY_DIR}/SDL2pp/Config.hh
+#			${PROJECT_BINARY_DIR}/SDL2pp/Export.hh
+#		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2pp
+#	)
+#
+#	configure_file(sdl2pp.pc.in sdl2pp.pc @ONLY)
+#	install(
+#		FILES
+#			${PROJECT_BINARY_DIR}/sdl2pp.pc
+#		DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+#	)
+#
+#	configure_file(cmake/SDL2ppConfig.cmake.in cmake/SDL2ppConfig.cmake @ONLY)
+#	install(EXPORT SDL2pp-targets
+#		FILE SDL2ppTargets.cmake
+#		NAMESPACE SDL2pp::
+#		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/SDL2pp
+#	)
+#	install(
+#		FILES
+#			${PROJECT_BINARY_DIR}/cmake/SDL2ppConfig.cmake
+#			cmake/FindSDL2_image.cmake
+#			cmake/FindSDL2_ttf.cmake
+#			cmake/FindSDL2_mixer.cmake
+#		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/SDL2pp
+#	)
 endif()
